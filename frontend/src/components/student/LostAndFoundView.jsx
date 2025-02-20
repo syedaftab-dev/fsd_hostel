@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+// Optimized lost and found tracking system with enhanced filtering and improved performance
 import { LostAndFoundStatus } from '../../types';
 import * as api from '../../services/api';
 import Modal from '../ui/Modal';
