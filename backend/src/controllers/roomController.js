@@ -71,3 +71,5 @@ function mapRoom(r) {
     occupants: r.occupants.map(o => o.toString()),
   };
 }
+
+// update_final_0
