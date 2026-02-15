@@ -1,9 +1,7 @@
-import express from 'express';
-import { handleChatbotMessage } from '../controllers/aiChatbotController.js';
-import { authRequired } from '../middleware/auth.js';
-
+﻿const express = require('express');
 const router = express.Router();
+const aiChatbotController = require('../controllers/aiChatbotController');
 
-router.post('/', authRequired, handleChatbotMessage);
+router.post('/message', aiChatbotController.handleMessage);
 
-export default router;
+module.exports = router;
