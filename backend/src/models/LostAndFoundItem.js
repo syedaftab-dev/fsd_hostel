@@ -1,13 +1,12 @@
-import mongoose from 'mongoose';
+﻿const mongoose = require('mongoose');
 
 const lostAndFoundItemSchema = new mongoose.Schema({
-  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  studentName: { type: String, required: true },
-  itemType: { type: String, required: true }, // Changed from enum to any string
-  description: { type: String, required: true },
-  location: { type: String, required: true },
-  datePosted: { type: Date, default: Date.now },
-  status: { type: String, enum: ['Open', 'Claimed'], default: 'Open' },
-}, { timestamps: true });
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    category: { type: String, required: true },
+    status: { type: String, enum: ['lost', 'found'], default: 'lost' },
+    reportedBy: { type: String, required: true },
+    dateReported: { type: Date, default: Date.now }
+});
 
-export const LostAndFoundItem = mongoose.model('LostAndFoundItem', lostAndFoundItemSchema);
+module.exports = mongoose.model('LostAndFoundItem', lostAndFoundItemSchema);
