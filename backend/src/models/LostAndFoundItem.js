@@ -1,12 +1,10 @@
 ﻿const mongoose = require('mongoose');
 
+// Basic schema structure
 const lostAndFoundItemSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    category: { type: String, required: true },
-    status: { type: String, enum: ['lost', 'found'], default: 'lost' },
-    reportedBy: { type: String, required: true },
-    dateReported: { type: Date, default: Date.now }
+    title: String,
+    description: String,
+    status: { type: String, default: 'lost' }
 });
 
 module.exports = mongoose.model('LostAndFoundItem', lostAndFoundItemSchema);
