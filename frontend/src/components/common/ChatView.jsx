@@ -1,7 +1,9 @@
 ﻿import React, { useState, useRef, useEffect } from 'react';
 
 const ChatView = () => {
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        { text: 'Welcome to chat!', timestamp: '12:00 PM', sender: 'system', id: 1 }
+    ]);
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef(null);
 
@@ -15,12 +17,25 @@ const ChatView = () => {
 
     const addMessage = () => {
         if (newMessage.trim()) {
-            setMessages([...messages, { 
-                text: newMessage, 
-                timestamp: new Date().toLocaleTimeString(),
+            const message = {
+                text: newMessage,
+                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                sender: 'user',
                 id: Date.now()
-            }]);
+            };
+            setMessages([...messages, message]);
             setNewMessage('');
+            
+            // Simulate response
+            setTimeout(() => {
+                const response = {
+                    text: 'Response received',
+                    timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                    sender: 'other',
+                    id: Date.now() + 1
+                };
+                setMessages(prev => [...prev, response]);
+            }, 500);
         }
     };
 
@@ -33,10 +48,11 @@ const ChatView = () => {
 
     return (
         <div className="chat-view">
+            <div className="chat-header">Chat Room</div>
             <div className="chat-messages">
                 {messages.map(msg => (
-                    <div key={msg.id} className="message">
-                        <div className="message-content">{msg.text}</div>
+                    <div key={msg.id} className={message }>
+                        <div className="message-bubble">{msg.text}</div>
                         <div className="message-time">{msg.timestamp}</div>
                     </div>
                 ))}
