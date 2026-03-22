@@ -1,11 +1,13 @@
 ﻿import React, { useState, useRef, useEffect } from 'react';
+import './ChatView.css';
 
 const ChatView = () => {
     const [messages, setMessages] = useState([
-        { text: 'Welcome to chat!', timestamp: '12:00 PM', sender: 'system', id: 1 }
+        { text: 'Welcome to the chat room!', timestamp: '12:00 PM', sender: 'system', id: 1 }
     ]);
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef(null);
+    const [isOnline, setIsOnline] = useState(true);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,48 +27,41 @@ const ChatView = () => {
             };
             setMessages([...messages, message]);
             setNewMessage('');
-            
-            // Simulate response
-            setTimeout(() => {
-                const response = {
-                    text: 'Response received',
-                    timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                    sender: 'other',
-                    id: Date.now() + 1
-                };
-                setMessages(prev => [...prev, response]);
-            }, 500);
-        }
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            addMessage();
         }
     };
 
     return (
-        <div className="chat-view">
-            <div className="chat-header">Chat Room</div>
+        <div className="chat-container">
+            <div className="chat-header">
+                <h3>Chat Room</h3>
+                <div className={status-indicator }></div>
+            </div>
             <div className="chat-messages">
                 {messages.map(msg => (
-                    <div key={msg.id} className={message }>
-                        <div className="message-bubble">{msg.text}</div>
-                        <div className="message-time">{msg.timestamp}</div>
+                    <div key={msg.id} className={message-wrapper }>
+                        <div className="message-content">
+                            <span className="message-text">{msg.text}</span>
+                            <span className="message-timestamp">{msg.timestamp}</span>
+                        </div>
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
             </div>
-            <div className="chat-input">
-                <textarea 
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Type a message..."
-                    onKeyPress={handleKeyPress}
-                    rows={2}
-                />
-                <button onClick={addMessage}>Send</button>
+            <div className="chat-input-area">
+                <div className="input-container">
+                    <textarea 
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="Type your message..."
+                        className="message-input"
+                        rows={1}
+                    />
+                    <button onClick={addMessage} className="send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     );
