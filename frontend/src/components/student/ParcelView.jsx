@@ -3,51 +3,105 @@
 const ParcelView = () => {
     const [parcels, setParcels] = useState([]);
     const [selectedParcel, setSelectedParcel] = useState(null);
-    const [notifications, setNotifications] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         setParcels([
-            { id: 1, status: 'In Transit', trackingNumber: 'TRK001', notification: 'Package will arrive tomorrow' },
-            { id: 2, status: 'Delivered', trackingNumber: 'TRK002', notification: 'Package delivered to reception' }
+            { 
+                id: 1, 
+                status: 'In Transit', 
+                trackingNumber: 'TRK001',
+                sender: 'Amazon',
+                recipient: 'John Doe',
+                estimatedDelivery: '2026-04-10',
+                weight: '2.5 kg'
+            },
+            { 
+                id: 2, 
+                status: 'Delivered', 
+                trackingNumber: 'TRK002',
+                sender: 'eBay',
+                recipient: 'John Doe',
+                estimatedDelivery: '2026-04-05',
+                weight: '1.2 kg',
+                deliveryDate: '2026-04-05'
+            }
         ]);
     }, []);
+
+    const openParcelDetails = (parcel) => {
+        setSelectedParcel(parcel);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedParcel(null);
+    };
 
     return (
         <div className="parcel-view">
             <h2>Parcel Tracking</h2>
             
-            {notifications.length > 0 && (
-                <div className="notifications">
-                    {notifications.map((notif, index) => (
-                        <div key={index} className="notification">{notif}</div>
-                    ))}
-                </div>
-            )}
-            
-            <div className="parcels-list">
+            <div className="parcels-container">
                 {parcels.map(parcel => (
                     <div 
                         key={parcel.id} 
                         className="parcel-card"
-                        onClick={() => setSelectedParcel(parcel)}
+                        onClick={() => openParcelDetails(parcel)}
                     >
-                        <p>Tracking: {parcel.trackingNumber}</p>
-                        <span className={parcel.status}>{parcel.status}</span>
-                        {parcel.notification && (
-                            <div className="parcel-notification">{parcel.notification}</div>
-                        )}
+                        <div className="parcel-header">
+                            <h4>{parcel.trackingNumber}</h4>
+                            <span className={status }>{parcel.status}</span>
+                        </div>
+                        <div className="parcel-info">
+                            <p>From: {parcel.sender}</p>
+                            <p>Est. Delivery: {parcel.estimatedDelivery}</p>
+                        </div>
                     </div>
                 ))}
             </div>
             
-            {selectedParcel && (
-                <div className="parcel-details">
-                    <h3>Parcel Details</h3>
-                    <p>Tracking: {selectedParcel.trackingNumber}</p>
-                    <p>Status: {selectedParcel.status}</p>
-                    {selectedParcel.notification && (
-                        <p>Notification: {selectedParcel.notification}</p>
-                    )}
+            {showModal && selectedParcel && (
+                <div className="modal-overlay">
+                    <div className="parcel-modal">
+                        <div className="modal-header">
+                            <h3>Parcel Details</h3>
+                            <button onClick={closeModal} className="close-btn">&times;</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="detail-row">
+                                <span>Tracking Number:</span>
+                                <span>{selectedParcel.trackingNumber}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span>Status:</span>
+                                <span className={status }>{selectedParcel.status}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span>Sender:</span>
+                                <span>{selectedParcel.sender}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span>Recipient:</span>
+                                <span>{selectedParcel.recipient}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span>Weight:</span>
+                                <span>{selectedParcel.weight}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span>Estimated Delivery:</span>
+                                <span>{selectedParcel.estimatedDelivery}</span>
+                            </div>
+                            {selectedParcel.deliveryDate && (
+                                <div className="detail-row">
+                                    <span>Delivery Date:</span>
+                                    <span>{selectedParcel.deliveryDate}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
