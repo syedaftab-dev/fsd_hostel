@@ -55,8 +55,10 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal server error');
 });
 
+/// serve listening on port 5000
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
 });
+
