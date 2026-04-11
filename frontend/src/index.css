@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CrestStay HMS Design System ─── */
+
+:root {
+  --bg:       #ffffff;
+  --bg2:      #f8f8f6;
+  --bg3:      #f1f0ec;
+  --gold:     #b8952e;
+  --gold-l:   #d4aa44;
+  --gold-bg:  #fdf8ee;
+  --muted:    #8a8880;
+  --text:     #1a1916;
+  --text2:    #4a4845;
+  --accent:   #2872d4;
+  --green:    #1a9e6a;
+  --red:      #c94040;
+  --amber:    #c47c20;
+  --border:   rgba(0,0,0,0.08);
+  --border2:  rgba(0,0,0,0.14);
+
+  /* Legacy aliases used by some components */
+  --bg-primary:   #f8f8f6;
+  --bg-secondary: #f1f0ec;
+  --bg-card:      #ffffff;
+  --text-primary:   #1a1916;
+  --text-secondary: #4a4845;
+  --text-muted:   #8a8880;
+  --border-color: rgba(0,0,0,0.08);
+  --accent-gradient: linear-gradient(135deg, #b8952e, #d4aa44);
+  --accent-soft:  #fdf8ee;
+  --accent-hover: #d4aa44;
+  --danger:       #c94040;
+  --success:      #1a9e6a;
+  --info:         #2872d4;
+  --warning:      #c47c20;
+}
+
+.dark {
+  --bg:       #1a1916;
+  --bg2:      #252420;
+  --bg3:      #2e2d28;
+  --gold:     #d4aa44;
+  --gold-l:   #e8c678;
+  --gold-bg:  rgba(184,149,46,0.12);
+  --muted:    #8a8880;
+  --text:     #f8f8f6;
+  --text2:    #dcdad4;
+  --accent:   #4892f4;
+  --green:    #2ac48a;
+  --red:      #e25858;
+  --amber:    #d99131;
+  --border:   rgba(255,255,255,0.08);
+  --border2:  rgba(255,255,255,0.14);
+
+  --bg-primary:   #1a1916;
+  --bg-secondary: #252420;
+  --bg-card:      #1e1d1a;
+  --text-primary:   #f8f8f6;
+  --text-secondary: #dcdad4;
+  --text-muted:   #8a8880;
+  --border-color: rgba(255,255,255,0.08);
+  --accent-gradient: linear-gradient(135deg, #d4aa44, #e8c678);
+  --accent-soft:  rgba(184,149,46,0.15);
+  --accent-hover: #b8952e;
+  --danger:       #e25858;
+  --success:      #2ac48a;
+  --info:         #4892f4;
+  --warning:      #d99131;
+}
+
+/* ─── Base ─── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--bg2);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── HMS Card ─── */
+.hms-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.hms-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.hms-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.hms-card-title  { font-size: 14px; font-weight: 500; color: var(--text); }
+.hms-card-sub    { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hms-card-body   { padding: 1.25rem; }
+
+/* ─── Stat Card ─── */
+.hms-stat {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.hms-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.hms-stat.gold::before   { background: linear-gradient(90deg, var(--gold), transparent); }
+.hms-stat.green::before  { background: linear-gradient(90deg, var(--green), transparent); }
+.hms-stat.blue::before   { background: linear-gradient(90deg, var(--accent), transparent); }
+.hms-stat.amber::before  { background: linear-gradient(90deg, var(--amber), transparent); }
+.hms-stat.red::before    { background: linear-gradient(90deg, var(--red), transparent); }
+.hms-stat-label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+.hms-stat-value { font-size: 28px; font-weight: 300; color: var(--text); margin: 6px 0 4px; letter-spacing: -0.02em; }
+.hms-stat-value span { font-size: 14px; font-weight: 500; }
+.hms-stat-change { font-size: 12px; color: var(--muted); }
+.hms-stat-bar  { height: 4px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.hms-stat-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+
+/* ─── Table ─── */
+.hms-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.hms-table th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border);
+}
+.hms-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  color: var(--text2);
+}
+.hms-table tr:last-child td { border-bottom: none; }
+.hms-table tr:hover td { background: var(--bg2); }
+.hms-table .name { font-weight: 500; color: var(--text); font-size: 13px; }
+.hms-table .sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* ─── Pills / Status Badges ─── */
+.hms-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+}
+.hms-pill.green  { background: rgba(26,158,106,0.12); color: var(--green); }
+.hms-pill.gold   { background: rgba(184,149,46,0.12); color: var(--gold); }
+.hms-pill.red    { background: rgba(201,64,64,0.10);  color: var(--red); }
+.hms-pill.blue   { background: rgba(40,114,212,0.10); color: var(--accent); }
+.hms-pill.amber  { background: rgba(196,124,32,0.10); color: var(--amber); }
+.hms-pill.gray   { background: rgba(138,136,128,0.10); color: var(--muted); }
+
+/* ─── Buttons ─── */
+.hms-btn, .hms-btn-sm {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600; border-radius: 8px;
+  transition: all 0.15s;
+}
+.hms-btn    { padding: 8px 18px; font-size: 13px; }
+.hms-btn-sm { padding: 6px 12px; font-size: 12px; }
+.hms-btn-primary  { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: #fff; }
+.hms-btn-primary:hover  { filter: brightness(1.08); box-shadow: 0 4px 12px rgba(184,149,46,0.3); }
+.hms-btn-danger   { background: linear-gradient(135deg, var(--red), #e05555); color: #fff; }
+.hms-btn-danger:hover   { filter: brightness(1.08); box-shadow: 0 4px 12px rgba(201,64,64,0.3); }
+.hms-btn-outline  { background: transparent; border: 1px solid var(--border2); color: var(--text2); }
+.hms-btn-outline:hover  { background: var(--bg2); }
+.hms-btn-ghost    { background: transparent; border: 1px solid transparent; color: var(--muted); }
+.hms-btn-ghost:hover    { background: var(--bg2); color: var(--text); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── Form Inputs ─── */
+.hms-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.hms-input:focus { border-color: var(--gold); background: var(--bg); box-shadow: 0 0 0 3px rgba(184,149,46,0.12); }
+.hms-input::placeholder { color: var(--muted); }
+.hms-select {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.hms-select:focus { border-color: var(--gold); }
+.hms-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; display: block; font-weight: 500; }
+.hms-form-row { display: flex; flex-direction: column; gap: 4px; }
+
+/* ─── Modal ─── */
+.hms-modal {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.hms-modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hms-modal-title  { font-size: 15px; font-weight: 600; color: var(--text); }
+.hms-modal-close  { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); line-height: 1; padding: 0 4px; }
+.hms-modal-close:hover { color: var(--text); }
+.hms-modal-body   { padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+
+/* ─── Sidebar ─── */
+.hms-sidebar {
+  width: 210px;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100dvh;
+}
+.hms-sidebar-logo { padding: 0 1.25rem; height: 60px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.hms-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-l));
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.hms-logo-icon svg { width: 16px; height: 16px; fill: #fff; }
+.hms-logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; color: var(--text); }
+.hms-logo-name span { color: var(--gold); }
+.hms-sidebar-nav { flex: 1; overflow-y: auto; padding: 0.75rem 0; }
+.hms-nav-section { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 0.6rem 1.25rem 0.3rem; font-weight: 500; }
+.hms-nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 1.25rem;
+  cursor: pointer; color: var(--text2);
+  font-size: 13px;
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+  user-select: none;
+  border: none; background: none; width: 100%; text-align: left;
+  font-family: 'DM Sans', sans-serif;
+}
+.hms-nav-item:hover { background: var(--bg2); color: var(--text); }
+.hms-nav-item.active { background: var(--gold-bg); border-left-color: var(--gold); color: var(--gold); border-left: 2px solid var(--gold); }
+.hms-nav-item svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.65; }
+.hms-nav-item.active svg { opacity: 1; }
+.hms-sidebar-footer { padding: 1rem 1.25rem; border-top: 1px solid var(--border); flex-shrink: 0; }
+.hms-user-info { padding: 10px 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
+.hms-user-name  { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hms-user-email { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.hms-logout-btn {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 8px 12px; border-radius: 6px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--red); font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s;
+}
+.hms-logout-btn:hover { background: rgba(201,64,64,0.06); }
+.hms-dark-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 6px;
+  background: var(--bg2); border: 1px solid var(--border);
+  color: var(--muted); cursor: pointer; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.hms-dark-toggle:hover { color: var(--text); background: var(--bg3); }
+
+/* ─── Page Header ─── */
+.hms-page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.hms-page-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; color: var(--text); }
+.hms-page-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ─── Activity Feed ─── */
+.hms-activity-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hms-activity-item:last-child { border-bottom: none; }
+.hms-activity-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 11px; font-weight: 600;
+}
+
+/* ─── Auth ─── */
+.hms-auth-wrap {
+  min-height: 100vh; background: var(--bg2);
+  display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+  overflow-y: auto;
+}
+.hms-auth-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  padding: 2.5rem 2rem;
+  width: 100%; max-width: 400px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+}
+.hms-auth-logo { text-align: center; margin-bottom: 1.5rem; }
+.hms-auth-logo-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-l));
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.hms-auth-logo-icon svg { width: 22px; height: 22px; fill: #fff; }
+.hms-auth-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--text); }
+.hms-auth-sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.hms-auth-form  { display: flex; flex-direction: column; gap: 14px; margin-top: 1.75rem; }
+.hms-auth-toggle { text-align: center; margin-top: 1rem; font-size: 12px; color: var(--muted); }
+.hms-auth-toggle button { color: var(--gold); font-weight: 600; background: none; border: none; cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; }
+.hms-auth-toggle button:hover { color: var(--gold-l); }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hms-fade-up { animation: fadeUp 0.3s ease forwards; }
+
+/* ─── Legacy glass classes (kept for backwards compat) ─── */
+.glass-effect {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.glass-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+.glass-input { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; }
+.glass-input:focus { border-color: var(--gold); background: var(--bg); }
+.glass-button { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: #fff; border: none; cursor: pointer; border-radius: 8px; font-weight: 600; }
+.glass-nav { background: var(--bg); border-right: 1px solid var(--border); }
+
+@media print {
+  body { background: white !important; }
+  .hms-sidebar, .print\:hidden { display: none !important; }
+}
