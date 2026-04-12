@@ -4,30 +4,55 @@ const ParcelView = () => {
     const [parcels, setParcels] = useState([]);
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        setParcels([
-            { 
-                id: 1, 
-                status: 'In Transit', 
-                trackingNumber: 'TRK001',
-                sender: 'Amazon',
-                recipient: 'John Doe',
-                estimatedDelivery: '2026-04-10',
-                weight: '2.5 kg'
-            },
-            { 
-                id: 2, 
-                status: 'Delivered', 
-                trackingNumber: 'TRK002',
-                sender: 'eBay',
-                recipient: 'John Doe',
-                estimatedDelivery: '2026-04-05',
-                weight: '1.2 kg',
-                deliveryDate: '2026-04-05'
-            }
-        ]);
+        fetchParcels();
     }, []);
+
+    const fetchParcels = async () => {
+        setLoading(true);
+        // Simulate API call
+        setTimeout(() => {
+            setParcels([
+                { 
+                    id: 1, 
+                    status: 'In Transit', 
+                    trackingNumber: 'TRK001',
+                    sender: 'Amazon',
+                    recipient: 'John Doe',
+                    estimatedDelivery: '2026-04-15',
+                    weight: '2.5 kg',
+                    lastUpdated: '2026-04-12'
+                },
+                { 
+                    id: 2, 
+                    status: 'Delivered', 
+                    trackingNumber: 'TRK002',
+                    sender: 'eBay',
+                    recipient: 'John Doe',
+                    estimatedDelivery: '2026-04-10',
+                    weight: '1.2 kg',
+                    deliveryDate: '2026-04-10',
+                    lastUpdated: '2026-04-10'
+                }
+            ]);
+            setLoading(false);
+        }, 1000);
+    };
+
+    const updateParcelStatus = async (parcelId, newStatus) => {
+        setLoading(true);
+        // Simulate API call to update status
+        setTimeout(() => {
+            setParcels(prev => prev.map(parcel => 
+                parcel.id === parcelId 
+                    ? { ...parcel, status: newStatus, lastUpdated: new Date().toISOString().split('T')[0] }
+                    : parcel
+            ));
+            setLoading(false);
+        }, 500);
+    };
 
     const openParcelDetails = (parcel) => {
         setSelectedParcel(parcel);
@@ -39,28 +64,49 @@ const ParcelView = () => {
         setSelectedParcel(null);
     };
 
+    const getStatusColor = (status) => {
+        switch(status) {
+            case 'Delivered': return 'green';
+            case 'In Transit': return 'blue';
+            case 'Pending': return 'orange';
+            default: return 'gray';
+        }
+    };
+
     return (
         <div className="parcel-view">
-            <h2>Parcel Tracking</h2>
-            
-            <div className="parcels-container">
-                {parcels.map(parcel => (
-                    <div 
-                        key={parcel.id} 
-                        className="parcel-card"
-                        onClick={() => openParcelDetails(parcel)}
-                    >
-                        <div className="parcel-header">
-                            <h4>{parcel.trackingNumber}</h4>
-                            <span className={status }>{parcel.status}</span>
-                        </div>
-                        <div className="parcel-info">
-                            <p>From: {parcel.sender}</p>
-                            <p>Est. Delivery: {parcel.estimatedDelivery}</p>
-                        </div>
-                    </div>
-                ))}
+            <div className="parcel-header">
+                <h2>Parcel Tracking</h2>
+                <button onClick={fetchParcels} disabled={loading}>
+                    {loading ? 'Refreshing...' : 'Refresh'}
+                </button>
             </div>
+            
+            {loading ? (
+                <div className="loading">Loading parcels...</div>
+            ) : (
+                <div className="parcels-container">
+                    {parcels.map(parcel => (
+                        <div 
+                            key={parcel.id} 
+                            className="parcel-card"
+                            onClick={() => openParcelDetails(parcel)}
+                        >
+                            <div className="parcel-header">
+                                <h4>{parcel.trackingNumber}</h4>
+                                <span className="status" style={{color: getStatusColor(parcel.status)}}>
+                                    {parcel.status}
+                                </span>
+                            </div>
+                            <div className="parcel-info">
+                                <p>From: {parcel.sender}</p>
+                                <p>Est. Delivery: {parcel.estimatedDelivery}</p>
+                                <small>Last updated: {parcel.lastUpdated}</small>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
             
             {showModal && selectedParcel && (
                 <div className="modal-overlay">
@@ -76,15 +122,13 @@ const ParcelView = () => {
                             </div>
                             <div className="detail-row">
                                 <span>Status:</span>
-                                <span className={status }>{selectedParcel.status}</span>
+                                <span style={{color: getStatusColor(selectedParcel.status)}}>
+                                    {selectedParcel.status}
+                                </span>
                             </div>
                             <div className="detail-row">
                                 <span>Sender:</span>
                                 <span>{selectedParcel.sender}</span>
-                            </div>
-                            <div className="detail-row">
-                                <span>Recipient:</span>
-                                <span>{selectedParcel.recipient}</span>
                             </div>
                             <div className="detail-row">
                                 <span>Weight:</span>
@@ -100,6 +144,10 @@ const ParcelView = () => {
                                     <span>{selectedParcel.deliveryDate}</span>
                                 </div>
                             )}
+                            <div className="detail-row">
+                                <span>Last Updated:</span>
+                                <span>{selectedParcel.lastUpdated}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
