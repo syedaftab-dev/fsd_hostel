@@ -18,33 +18,6 @@ This repository contains the source code for a comprehensive Hostel Management S
 
 This project provides a complete hostel management solution with a Node.js/Express backend API and a modern React/Vite frontend. The system handles authentication, student inquiries, administrative overrides, and various self-service modules.
 
-## Project Contributors
-
-We are proud to acknowledge the following contributors who built the core modules of this system:
-
-1. **Vineet - Team Leader**
-   - **Emergency Module**: Real-time alert system for student safety.
-   - **Gate Pass**: Digital request and approval workflow for campus entry/exit.
-   - **Mess Menu**: Weekly menu management and snack tracking.
-   - **Anti-Ragging**: Confidential reporting system for student security.
-
-2. **Aftab**
-   - **Dashboard**: Centralized overview for both students and admins.
-   - **Profile Section**: Comprehensive user identity and information management.
-   - **Auth**: Secure Authentication (JWT) and Authorization system.
-   - **Health Records**: Student health tracking and record management.
-
-3. **Ayush**
-   - **Chat Section**: Real-time direct messaging between users.
-   - **Lost and Found**: Community-driven item reporting and claiming.
-   - **Parcel**: Tracking and notification system for student packages.
-   - **Complaints**: Structured feedback and issue resolution pipeline.
-
-4. **Sreekanth**
-   - **Sports Arena**: Facility booking and activity notifications.
-   - **Room Allocation**: Automated and manual room management system.
-   - **Fees Section**: Fee status tracking and payment verification.
-   - **Leave Request**: Formal leave application and tracking system.
 
 ## Structure
 
