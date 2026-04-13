@@ -2,6 +2,8 @@
 
 This repository contains the source code for a comprehensive Hostel Management System, featuring an automated student portal and an administrative dashboard.
 
+**Live Demo**: https://hostel-administration-system-fgvf.onrender.com/
+
 ## Table of Contents
 
 - [Overview](#overview)
